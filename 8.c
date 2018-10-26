@@ -6,7 +6,7 @@
 #define  n_group_elem_max 1000 
 #define  n_elem_rect_max  10000
 
-#define  Error_Print( ) ;
+#define  Error_Print(cmd_string)  do(printf("cmd_string\n"))while(0); 
 
 typedef struct str_rect{
 	int l;
@@ -25,7 +25,7 @@ int main(void)
 	
     p_elem_num =  input_n_group(&n_group);
     input_n_group_elem_num( n_group , &p_elem_num);
-     input_elem_rectangle(p_str_rect_type  rect)
+     input_elem_rectangle(p_str_rect_type  rect);
     
 	//scanf("%d",n_group_elem);
 //	scanf("%d",elem_rect);
@@ -77,12 +77,12 @@ int* input_n_group(unsigned int *p_n_group)
 	{
 		do
 		 {
-		 	scanf("%d",&test_rectangle);
+		 	scanf("%d",&test_rectangle_val);
 		 	if(test_rectangle_val>n_elem_rect_max)  Error_Print(rectangle value to longger);
 		 } while(test_rectangle_val>n_elem_rect_max);
 		 
-		 if(0==i) rect->l = test_rectangle;
-		 else rect->w = test_rectangle;
+		 if(0==i) rect->l = test_rectangle_val;
+		 else rect->w = test_rectangle_val;
 		
 	}
  	
