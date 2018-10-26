@@ -1,77 +1,49 @@
 #include<stdio.h>
-#include<string.h>
 #include<stdlib.h>
-// 写一个判断的括号是否匹配的函数
-int MatchCheck(char a[],int len){
-    int flag = 0;
-    char s[10000];
-    int top,i;
-    char temp;
-    // 初始化一个栈
-    top = 0;
-    for(i=0;i<len;i++){
-        if(a[i]=='['){ // 如果是左括号直接入栈
-            s[++top]=a[i];
-            continue;
-        }
-        if(a[i]==']'){ // 如果是右括号，则尝试匹配
-            temp = s[top];
-            if(temp=='['){
-                flag = 1;
-                top--;
-                continue;
-            }else{
-                flag = 0;
-                break;
-            }
-        }
+#define N_row_max 10 /*最多有N_max组测试数据*/
+#define N_char 4 /*每一组有N_char=4 字符 */
 
-        if(a[i]=='('){ // 如果是左括号直接入栈
-            s[++top]=a[i];
-            continue;
-        }
-        if(a[i]==')'){ // 如果是右括号，则尝试匹配
-            temp = s[top];
-            if(temp=='('){
-                flag = 1;
-                top--;
-                continue;
-            }else{
-                flag = 0;
-                break;
-            }
-        }
-    }
-    if(flag&&(top==0)){
-        return 1;
-    }else{
-        return 0;
-    }
+void mem_arr_ending(char a[][4]);/*二维数组，里面元素的数组结尾赋值为0 */
+int qsort_comp(const void *a,const void *b);
+
+int main(void)
+{
+	/*printf("%d",sizeof(char));*/
+	char a[N_row_max][N_char]={0};/*有N_max组，每一组只能存三个字符，最后一个'\0' */
+
+	unsigned char i , N;
+	scanf("%d ",&N);/*有N组测试数据*/
+	
+
+	for(i=0;i<N;i++)
+	{ 
+		scanf("%s",(&a[0])+i);
+	}
+	
+	mem_arr_ending(a);
+	
+	for(i=0;i<N;i++)
+	{	
+		qsort(((&a[0])+i),N_char-1,sizeof(char) ,qsort_comp);
+		printf("%0.1s %0.1s %0.1s\n",((char*)((&a[0])+i)+0),\
+							((char*)((&a[0])+i)+1),\
+							((char*)((&a[0])+i)+2)	);
+	}
+
+	return 0;
+}
+
+void mem_arr_ending(char a[][4])/*二维数组，里面元素的数组结尾赋值为0*/ 
+{ 
+	unsigned char i;
+	for(i=0;i<N_row_max;i++)
+	{
+		a[i][3] = '\0';
+	}
 
 }
-int main(){
-    // 提示输入一个数
-    int N,i;
-    scanf("%d",&N);
-    int len;
-     // 对N组数据循环判断
-     int count = 1;
-     int result[5];
-     while(count<=N){
-         char a[10000]={'\0'};
-        // 读入一行字符串
-        scanf("%s",&a);
-         // 求字符串的长度
-        len = strlen(a);
-        result[count]=MatchCheck(a,len);
-        count++;
-     }
-     for(i=1;i<count;i++){
-         if(result[i]){
-             printf("Yes\n");
-         }else{
-             printf("No\n");
-         }
-     }
-     return 0;
-}//{[({()()()({}{}{})})]}
+
+int qsort_comp(const void *a,const void *b)
+{
+	return (*(char*)a - *(char*)b);
+}
