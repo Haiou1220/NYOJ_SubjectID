@@ -6,7 +6,7 @@
 #define  n_group_elem_max 1000 
 #define  n_elem_rect_max  10000
 
-#define  Error_Print(cmd_string)  do(printf("cmd_string\n"))while(0); 
+#define  Error_Large_Print(cmd_string)  do(printf("cmd_string\n"))while(0); 
 
 typedef struct str_rect{
 	int l;
@@ -38,17 +38,18 @@ int* input_n_group(unsigned int *p_n_group)
 	int n_size;
 	int *p;
 	  
-	scanf("%d",p_n_group);
-	if(*p_n_group>=n_group_max)
-	{	
-		exit(-1) ;
-	}else
-	{	
+	do
+	{
+		scanf("%d",p_n_group);
+		if(*p_n_group>=n_group_max)) Error_Large_Print(group  too many);
+	}
+	while(*p_n_group>=n_group_max);
+		
 		n_size = sizeof(int)*(*p_n_group); /*每一组的长方形个数不超过10 000*/
 		p = malloc( n_size);
 		memset(p,0,n_size);
 		return p;
-	}	
+		
 	
  } 
  
@@ -60,6 +61,7 @@ int* input_n_group(unsigned int *p_n_group)
 	 do
 	 {
 	 scanf("%d",&test_elem_num);
+	 if(test_elem_num>n_group_elem_max) Error_Large_Print(Each group is too numerous);
 	 } while(test_elem_num>n_group_elem_max);
 	 
 	 p_elem_num[i] = test_elem_num;
@@ -68,7 +70,7 @@ int* input_n_group(unsigned int *p_n_group)
 	return 0;
  }
  
- input_elem_rectangle(p_str_rect_type  rect)
+ input_elem_rectangle(p_str_rect_type  rect)//now now
  {
  	int test_rectangle_val;
  	
